@@ -13,15 +13,15 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('users', function (Blueprint $table) {
+        Schema::create('files', function (Blueprint $table) {
             $table->id();
-            $table->string('login')->unique();
-            $table->string('email')->unique();
-            $table->string('password');
-            $table->string('phone')->unique();
-            $table->rememberToken();
+            $table->unsignedBigInteger('product_id');
+            $table->string('path')->unique();
             $table->timestamps();
-            $table->softDeletes();
+
+            $table->index('product_id', 'files_product_idx');
+
+            $table->foreign('product_id', 'files_product_fk')->on('products')->references('id');
         });
     }
 
@@ -32,6 +32,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('users');
+        Schema::dropIfExists('files');
     }
 };
