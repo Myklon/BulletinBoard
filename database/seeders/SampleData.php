@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Product;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
@@ -38,18 +39,25 @@ class SampleData extends Seeder
             'phone' => '+1 234 567 89 11'
         ]);
 
+        // \App\Models\User::factory()->create([
+        //     'name' => 'Test User',
+        //     'email' => 'test@example.com',
+        // ]);
+
+        Product::factory(20)->create();
         #Создание объявлений-заглушек
         DB::table('products')->insert([
            'title' => 'Заглушка первая',
            'description' => "Описательная заглушка",
-           'short_description' => "Кратко",
+           'short_description' => "Короткая заглушка",
            'price' => 99.99,
            'user_id' => 1,
            'category_id' => 1
         ]);
         DB::table('products')->insert([
             'title' => 'Заглушка вторая',
-            'description' => "Еще одна описательная заглушка",
+            'short_description' => "Кратко",
+            'description' => "Еще короткая заглушка",
             'price' => 66.66,
             'user_id' => 2,
             'category_id' => 2

@@ -16,10 +16,10 @@ return new class extends Migration
         Schema::create('products', function (Blueprint $table) {
             $table->id();
             $table->string('title');
-            $table->string('short_description')->nullable();
+            $table->string('short_description');
             $table->text('description');
             $table->decimal('price');
-            $table->string('cover')->default('/cover/default.png');
+            $table->string('cover')->default('covers/default.png');
             $table->boolean('is_active')->default(true);
             $table->timestamps();
 

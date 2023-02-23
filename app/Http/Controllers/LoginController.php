@@ -8,6 +8,13 @@ class LoginController extends Controller
 {
     public function index()
     {
-        return view('auth.login');
+        $meta = [
+            'title' => 'Вход'
+        ];
+        return view('auth.login', compact('meta'));
+    }
+    public function login()
+    {
+        dd('dd');
     }
 }

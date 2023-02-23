@@ -1,12 +1,12 @@
 <!doctype html>
-<html lang="en">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
-    <title>Document</title>
+    <title>{{$meta['title'] ?? "Akihime"}}</title>
 </head>
 <body>
 <div>
@@ -14,7 +14,7 @@
         <div class="container d-flex flex-wrap">
             <ul class="nav me-auto">
                 <li class="nav-item"><a href="{{ route('product.index') }}" class="nav-link link-dark px-2">Объявления</a></li>
-                <li class="nav-item"><a href="{{ route('category.index') }}" class="nav-link link-dark px-2">Категории (dropdown?)</a></li>
+                <li class="nav-item"><a href="{{ route('category.index') }}" class="nav-link link-dark px-2">Категории</a></li>
             </ul>
             <ul class="nav">
                 <li class="nav-item"><a href="{{route('login')}}" class="nav-link link-dark px-2">Войти</a></li>

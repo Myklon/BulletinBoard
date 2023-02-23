@@ -21,7 +21,6 @@ return new class extends Migration
             $table->string('phone')->unique();
             $table->rememberToken();
             $table->timestamps();
-            $table->softDeletes();
         });
     }
 
