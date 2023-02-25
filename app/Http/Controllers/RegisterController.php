@@ -15,10 +15,7 @@ class RegisterController extends Controller
     }
     public function index()
     {
-        $meta = [
-            'title' => 'Регистрация'
-            ];
-        return view('auth.register', compact('meta'));
+        return view('auth.register');
     }
 
     public function register(RegisterRequest $request, HashService $hashService)

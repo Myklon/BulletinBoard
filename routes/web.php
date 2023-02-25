@@ -64,6 +64,13 @@ Route::get(
     [\App\Http\Controllers\CategoryController::class, 'productsByCategory']
 )->name('category.show')->where('category', '^\d+$');
 
+Route::get(
+    'test',
+    function () {
+        return __('product.create.success.success');
+    }
+);
+
 //Route::get('/public/{path}');
 
 //Auth::routes();

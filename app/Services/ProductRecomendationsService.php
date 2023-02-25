@@ -22,7 +22,7 @@ class ProductRecomendationsService
                                   where('category_id', $categoryId)
                                   ->where('id', '<>', $productId)
                                   ->inRandomOrder()
-                                  ->limit(4)
+                                  ->limit($reqAmount)
                                   ->get();
 
         $curAmount = count($recommendations);
@@ -33,6 +33,7 @@ class ProductRecomendationsService
                                       ->limit($reqAmount - $curAmount)
                                       ->get();
             $recommendations = $recommendations->merge($otherProducts);
+//            $recommendations = $recommendations + $otherProducts;
         }
         return $recommendations;
     }

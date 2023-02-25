@@ -42,10 +42,7 @@ class FormProductRequest extends FormRequest
             'cover' => 'image|max:2000',
             'files' => 'max:3',
             'files.*' => 'image|max:2000',
-            'category_id' => [
-                'required', 'numeric',
-                Rule::exists('categories', 'id'),
-                ],
+            'category_id' => 'required|numeric'
         ];
     }
 

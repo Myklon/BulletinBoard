@@ -45,19 +45,15 @@ class ProductController extends Controller
             foreach($request->file('files') as $file)
             {
                 $filename = $file->store('files');
+
                 File::create([
                     'product_id' => $product->id,
                     'path' => $filename,
                 ]);
             }
         }
-//        $product = Product::create($request->validated());
-//
-//        if($request->hasFile('cover'))
-//            $productFileService->upload($product->id, $request->cover);
-//
-//        $productFileService->upload();
-        return redirect()->route('product.show', $product->id)->with('success', 'Объявление успешно добавлено');
+
+        return redirect()->route('product.show', $product->id)->with(__('product.create.success.success'));
     }
 
     public function edit(Product $product)

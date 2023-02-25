@@ -108,4 +108,5 @@ return [
         'new_password_confirmation' => '`Подтвердите новый пароль`',
     ],
 
+
 ];
