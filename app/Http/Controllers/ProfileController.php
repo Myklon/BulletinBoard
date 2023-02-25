@@ -5,32 +5,32 @@ namespace App\Http\Controllers;
 use App\Http\Requests\ChangePasswordRequest;
 use App\Http\Requests\ChangePhoneRequest;
 use App\Models\User;
+use App\Services\HashService;
 use Illuminate\Http\Request;
 
 class ProfileController extends Controller
 {
     public function show(User $user)
     {
-        $meta = [
-            'title' => "Профиль пользователя $user->login"
-        ];
-        return view('profile.show', compact('meta','user'));
+        return view('profile.show', compact('user'));
     }
 
     public function edit(User $user)
     {
-        $meta = [
-            'title' => "Редактирование профиля"
-        ];
-        return view('profile.form', compact('meta','user'));
+        return view('profile.form', compact('user'));
     }
 
     public function changePhone(ChangePhoneRequest $request, User $user)
     {
-        return redirect()->route('profile.edit', $user->id);
+        $user->update($request->validated());
+        return redirect()->route('profile.show', $user->id)->with(['success' => 'Номер телефона успешно изменён']);
     }
-    public function changePassword(ChangePasswordRequest $request, User $user)
+    public function changePassword(ChangePasswordRequest $request, User $user, HashService $hashService)
     {
-        return redirect()->route('profile.edit', $user->id);
+        if ($hashService->validate($request->old_password, $user->password)) {
+            $user->update(['password' => $hashService->hash($request->new_password)]);
+            return redirect()->route('profile.show', $user->id)->with(['success' => 'Пароль успешно изменён']);
+        }
+        return redirect()->route('profile.edit', $user->id)->withErrors(['password' => 'Неверный текущий пароль']);
     }
 }

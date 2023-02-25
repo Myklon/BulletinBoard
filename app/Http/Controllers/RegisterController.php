@@ -9,6 +9,10 @@ use Illuminate\Http\Request;
 
 class RegisterController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('guest');
+    }
     public function index()
     {
         $meta = [
@@ -23,7 +27,6 @@ class RegisterController extends Controller
 
         $user->update(['password' => $hashService->hash($request->password)]);
 
-        return redirect()->route('login.form');
-//        return response()->json($user);
+        return redirect()->route('login')->with('success', 'Регистрация успешно выполнена');
     }
 }

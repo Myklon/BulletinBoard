@@ -6,10 +6,6 @@ use Illuminate\Foundation\Http\FormRequest;
 
 class LoginRequest extends FormRequest
 {
-    protected $attributeNames = [
-        'login' => '`Имя пользователя`',
-        'password' => '`Пароль`',
-    ];
     /**
      * Determine if the user is authorized to make this request.
      *
@@ -28,21 +24,19 @@ class LoginRequest extends FormRequest
     public function rules()
     {
         return [
-            'login' => 'required|min:4|max:17',
+            'login' => 'required|min:4|max:17|exists:users',
             'password' => 'required|min:4|max:17',
         ];
     }
-    public function attributes()
-    {
-        return $this->attributeNames;
-    }
-    public function messages()
-    {
-        return [
-            'login.required' => 'Введите логин.',
-            'password.required' => 'Введите пароль.',
-            'min' => 'Поле :attribute должно содержать не менее :min символов.',
-            'max' => 'Поле :attribute должно содержать не более :max символов.',
-        ];
-    }
+
+//    public function messages()
+//    {
+//        return [
+//            'login.required' => 'Введите логин.',
+//            'login.exists' => 'Пользователя с таким логином не существует.',
+//            'password.required' => 'Введите пароль.',
+//            'min' => 'Поле :attribute должно содержать не менее :min символов.',
+//            'max' => 'Поле :attribute должно содержать не более :max символов.',
+//        ];
+//    }
 }

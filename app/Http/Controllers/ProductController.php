@@ -2,10 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\FormProductRequest;
+use App\Http\Requests\Product\FormProductRequest;
 use App\Models\Category;
 use App\Models\File;
 use App\Models\Product;
+use App\Services\ProductFileService;
+use App\Services\ProductRecomendationsService;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 
 
@@ -13,31 +16,23 @@ class ProductController extends Controller
 {
     public function index()
     {
-        $meta = [
-            'title' => 'Все объявления'
-        ];
         $products = Product::orderByDesc("id")->paginate(16);
 
-        return view('product.index', compact('meta','products'));
+        return view('product.index', compact('products'));
     }
 
     public function create()
     {
-        $meta = [
-            'title' => 'Создание объявления',
-            'cover_info' => 'Обложка товара',
-            'files_info' => 'Изображения товара',
-            'button' => 'Добавить товар'
-        ];
-        $categories = Category::all();
-        return view('product.form', compact('meta', 'categories'));
+        $categories = Category::limit(100)->get();
+        return view('product.create', compact('categories'));
     }
 
-    public function store(FormProductRequest $request)
+    public function store(FormProductRequest $request, ProductFileService $productFileService)
     {
-        $data = $request->except('cover', 'files', '_token');
+        $data = $request->only('title','short_description','description','price','category_id');
+//      $data = $request->except('cover', 'files', '_token');
 
-        $data['user_id'] = 1;
+        $data['user_id'] = Auth::id();
 
         if($request->hasFile('cover')) {
             $cover = $request->cover->store('covers');
@@ -56,25 +51,25 @@ class ProductController extends Controller
                 ]);
             }
         }
-        return redirect()->route('product.show', $product->id);
+//        $product = Product::create($request->validated());
+//
+//        if($request->hasFile('cover'))
+//            $productFileService->upload($product->id, $request->cover);
+//
+//        $productFileService->upload();
+        return redirect()->route('product.show', $product->id)->with('success', 'Объявление успешно добавлено');
     }
 
     public function edit(Product $product)
     {
-        $meta = [
-            'title' => 'Изменение объявления',
-            'cover_info' => 'Заменить обложку',
-            'files_info' => 'Заменить изображения',
-            'button' => 'Изменить товар'
-        ];
-        $categories = Category::all();
-        return view('product.form', compact('meta','categories', 'product'));
+        $categories = Category::limit(100)->get();
+        return view('product.edit', compact('categories', 'product'));
     }
+//    public function update(FormProductRequest $request, Product $product)
+
     public function update(FormProductRequest $request, Product $product)
     {
-        $data = $request->except('cover', 'files', '_token');
-
-        $data['user_id'] = 1;
+        $data = $request->only('title','short_description','description','price','category_id');
 
         if($request->hasFile('cover')) {
             if($product->cover === "covers/default.png")
@@ -107,7 +102,7 @@ class ProductController extends Controller
                 ]);
             }
         }
-        return redirect()->route('product.show', $product->id);
+        return redirect()->route('product.show', $product->id)->with('success', 'Объявление успешно изменено');
     }
 
     public function remove(Product $product)
@@ -127,14 +122,13 @@ class ProductController extends Controller
         }
         $product->delete();
 
-        return redirect()->route('product.index');
+        return redirect()->route('product.index')->with('success', 'Объявление успешно удалено');
     }
 
-    public function show(Product $product)
+    public function show(Product $product, ProductRecomendationsService $productRecomendationsService)
     {
-        $meta = [
-            'title' => "Объявление: $product->title"
-        ];
-        return view('product.show', compact('meta','product'));
+        $recommendations = $productRecomendationsService->getRecommendations($product->id, $product->category_id, 4);
+
+        return view('product.show', compact('product', 'recommendations'));
     }
 }

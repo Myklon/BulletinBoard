@@ -1,13 +1,24 @@
 @extends('layouts.main')
 @section('content')
+
     <div class="row mt-4 justify-content-center">
         <h2 class="text-center">Вход</h2>
         <div class="col-md-6">
+            @if (\Session::has('success'))
+                <div class="alert alert-success">
+                    {{ \Session::get('success') }}
+                </div>
+            @endif
+            @error('auth')
+                <div class="alert alert-warning mt-2" role="alert">
+                    {{$message}}
+                </div>
+            @enderror
             <form action="{{route('login')}}" method="post">
                 @csrf
                 <div class="form-group mb-3">
                     <label for="login">Имя пользователя:</label>
-                    <input type="text" name="login" class="form-control" id="login" placeholder="Введите имя пользователя">
+                    <input type="text" name="login" class="form-control" id="login" placeholder="Введите имя пользователя" value="{{old('login')}}">
                     @error('login')
                     <p class="text-danger">{{$message}}</p>
                     @enderror

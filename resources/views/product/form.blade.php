@@ -1,7 +1,7 @@
-@extends('layouts.main')
+@extends('layouts.main', ['title' => $title])
 @section('content')
     <div class="row mt-4 justify-content-center">
-        <h3 class="text-center">{{$meta['title']}}</h3>
+        <h3 class="text-center">{{$title}}</h3>
         <div class="col-md-6">
             <form method="POST" action="
             {{isset($product) ? route('product.update', $product->id) : route('product.store')}}"
@@ -43,7 +43,7 @@
                     @enderror
                 </div>
                 <div class="mb-3">
-                    <label for="formFile" class="form-label">{{$meta['cover_info']}}</label>
+                    <label for="formFile" class="form-label">Загрузить обложку</label>
                     <input name="cover" class="form-control" type="file" id="formFile">
                     @error('cover')
                     <p class="text-danger">{{$message}}</p>
@@ -57,7 +57,7 @@
                     @enderror
                 </div>
                 <div class="mb-3">
-                    <label for="formFileMultiple" class="form-label">{{$meta['files_info']}}</label>
+                    <label for="formFileMultiple" class="form-label">Загрузить изображения</label>
                     <input name="files[]" class="form-control" type="file" id="formFileMultiple" multiple>
                     @error('files')
                     <p class="text-danger">{{$message}}</p>

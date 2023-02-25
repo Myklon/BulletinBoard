@@ -14,15 +14,12 @@ class CategoryController extends Controller
               'title' => 'Все категории'
             ];
         $categories = Category::all();
-        return view('category.index', compact('meta', 'categories'));
+        return view('category.index', compact('categories'));
     }
 
     public function productsByCategory(Category $category)
     {
-        $meta = [
-            'title' => "Категория: $category->title",
-        ];
         $products = Product::where('category_id', $category->id)->orderByDesc('id')->paginate(16);
-        return view('product.index', compact('meta','products'));
+        return view('category.show', compact('category','products'));
     }
 }
