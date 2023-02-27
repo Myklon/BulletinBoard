@@ -24,6 +24,6 @@ class RegisterController extends Controller
 
         $user->update(['password' => $hashService->hash($request->password)]);
 
-        return redirect()->route('login')->with('success', 'Регистрация успешно выполнена');
+        return redirect()->route('login')->with('success',  __('register.success.success'));
     }
 }

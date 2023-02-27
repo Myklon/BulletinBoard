@@ -45,7 +45,6 @@ class ProductController extends Controller
             foreach($request->file('files') as $file)
             {
                 $filename = $file->store('files');
-
                 File::create([
                     'product_id' => $product->id,
                     'path' => $filename,
@@ -53,7 +52,7 @@ class ProductController extends Controller
             }
         }
 
-        return redirect()->route('product.show', $product->id)->with(__('product.create.success.success'));
+        return redirect()->route('product.show', $product->id)->with('success', __('product.create.success.success'));
     }
 
     public function edit(Product $product)
@@ -98,7 +97,7 @@ class ProductController extends Controller
                 ]);
             }
         }
-        return redirect()->route('product.show', $product->id)->with('success', 'Объявление успешно изменено');
+        return redirect()->route('product.show', $product->id)->with('success', __('product.edit.success.success'));
     }
 
     public function remove(Product $product)
@@ -118,7 +117,7 @@ class ProductController extends Controller
         }
         $product->delete();
 
-        return redirect()->route('product.index')->with('success', 'Объявление успешно удалено');
+        return redirect()->route('product.index')->with('success', __('product.delete.success.success'));
     }
 
     public function show(Product $product, ProductRecomendationsService $productRecomendationsService)

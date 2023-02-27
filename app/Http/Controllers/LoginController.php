@@ -22,7 +22,7 @@ class LoginController extends Controller
     public function login(LoginRequest $request)
     {
         if (Auth::attempt($request->validated()))
-            return redirect()->route('profile.show', Auth::id())->with('success', 'Вход успешно выполнен');
-        return redirect()->route('login')->withInput($request->only('login'))->withErrors(['auth' => 'Неверный логин или пароль']);
+            return redirect()->route('profile.show', Auth::id())->with('success',  __('login.success.success'));
+        return redirect()->route('login')->withInput($request->only('login'))->withErrors(['fail' => __('login.fail.fail')]);
     }
 }

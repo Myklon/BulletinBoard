@@ -15,7 +15,7 @@ return [
     |
     */
 
-    'name' => env('APP_NAME', 'Bulletin Board'),
+    'name' => env('APP_NAME', 'Akihime | Bulletin Board'),
 
     /*
     |--------------------------------------------------------------------------

@@ -12,4 +12,14 @@ return [
             ]
         ]
     ],
+    'edit'   => [
+        'success' => [
+            'success' => 'Успешно изменено',
+        ]
+    ],
+    'delete'   => [
+        'success' => [
+            'success' => 'Успешно удалено',
+        ]
+    ],
 ];

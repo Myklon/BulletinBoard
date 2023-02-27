@@ -9,7 +9,7 @@
                     {{ \Session::get('success') }}
                 </div>
             @endif
-            @error('auth')
+            @error('fail')
                 <div class="alert alert-warning mt-2" role="alert">
                     {{$message}}
                 </div>
