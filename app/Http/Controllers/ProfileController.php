@@ -25,7 +25,7 @@ class ProfileController extends Controller
         $user->update($request->validated());
 
         return redirect()->route('profile.show', $user->id)->with(
-            ['success' => 'Номер телефона успешно изменён']
+            ['success' => __('profileSettings.changePhone.success.success')]
         );
     }
 
@@ -34,39 +34,12 @@ class ProfileController extends Controller
         User $user,
         HashService $hashService
     ) {
-        if ($hashService->validate($request->old_password, $user->password)) {
-            $user->update(
-                ['password' => $hashService->hash($request->new_password)]
-            );
-
-            return redirect()->route('profile.show', $user->id)->with(
-                ['success' => 'Пароль успешно изменён']
-            );
-
-            $mailService->send('masdf', 'password has been changed');
-
-            $authlog->create('User has changed password');
+        if (!$hashService->validate($request->old_password, $user->password)) {
+            return redirect()->route('profile.edit', $user->id)->withErrors(['password' => __('profileSettings.changePassword.fail.password')]);
         }
 
-        return redirect()->route('profile.edit', $user->id)->withErrors(
-            ['password' => 'Неверный текущий пароль']
-        );
-    }
+        $user->update(['password' => $hashService->hash($request->new_password)]);
 
-//    public function changePassword1(ChangePasswordRequest $request, User $user, HashService $hashService) {
-//        if (!$hashService->validate($request->old_password, $user->password))
-//            return redirect()->route('profile.edit', $user->id)->withErrors(['password' => 'Неверный текущий пароль']);
-//
-//        if (auth()->user()->ratelimit())
-//            return redirect()->route('profile.edit', $user->id)->withErrors(['password' => 'ВЫ в рейтлимите']);
-//
-//        $user->update(['password' => $hashService->hash($request->new_password)]);
-//
-//        $mailService->send('masdf', 'password has been changed');
-//        $authlog->create('123adsads');
-//
-//        return redirect()->route('profile.show', $user->id)->with(
-//            ['success' => 'Пароль успешно изменён']
-//        );
-//    }
+        return redirect()->route('profile.show', $user->id)->with(['success' => __('profileSettings.changePassword.success.success')]);
+    }
 }
