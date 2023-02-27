@@ -57,6 +57,7 @@ class ProductController extends Controller
 
     public function editProductForm(Product $product)
     {
+        $this->authorize('isOwner', $product);
         $categories = Category::limit(100)->get();
         return view('product.edit', compact('categories', 'product'));
     }
@@ -64,6 +65,7 @@ class ProductController extends Controller
 
     public function update(FormProductRequest $request, Product $product)
     {
+        $this->authorize('isOwner', $product);
         $data = $request->only('title','short_description','description','price','category_id');
 
         if($request->hasFile('cover')) {
@@ -102,6 +104,7 @@ class ProductController extends Controller
 
     public function removeProduct(Product $product)
     {
+        $this->authorize('isOwner', $product);
         if($product->cover !== "covers/default.png")
         {
             Storage::delete($product->cover);

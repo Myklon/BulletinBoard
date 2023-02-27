@@ -21,7 +21,8 @@ class LoginController extends Controller
     }
     public function login(LoginRequest $request)
     {
-        if (Auth::attempt($request->validated()))
+        $remember = isset($request->remember);
+        if (Auth::attempt($request->validated(), $remember))
             return redirect()->route('profile.show', Auth::id())->with('success',  __('login.success.success'));
         return redirect()->route('login')->withInput($request->only('login'))->withErrors(['fail' => __('login.fail.fail')]);
     }

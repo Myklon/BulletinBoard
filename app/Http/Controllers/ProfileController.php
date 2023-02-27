@@ -17,11 +17,13 @@ class ProfileController extends Controller
 
     public function editProfileForm(User $user)
     {
+        $this->authorize('isOwner', $user);
         return view('profile.form', compact('user'));
     }
 
     public function changePhone(ChangePhoneRequest $request, User $user)
     {
+        $this->authorize('isOwner', $user);
         $user->update($request->validated());
 
         return redirect()->route('profile.show', $user->id)->with(
@@ -34,6 +36,7 @@ class ProfileController extends Controller
         User $user,
         HashService $hashService
     ) {
+        $this->authorize('isOwner', $user);
         if (!$hashService->validate($request->old_password, $user->password)) {
             return redirect()->route('profile.edit', $user->id)->withErrors(['password' => __('profileSettings.changePassword.fail.password')]);
         }
