@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('title');
             $table->string('short_description');
             $table->text('description');
-            $table->decimal('price');
+            $table->decimal('price', 15, 2);
             $table->string('cover')->default('covers/default.png');
             $table->boolean('is_active')->default(true);
             $table->timestamps();

@@ -28,15 +28,4 @@ class LoginRequest extends FormRequest
             'password' => 'required|min:4|max:17',
         ];
     }
-
-//    public function messages()
-//    {
-//        return [
-//            'login.required' => 'Введите логин.',
-//            'login.exists' => 'Пользователя с таким логином не существует.',
-//            'password.required' => 'Введите пароль.',
-//            'min' => 'Поле :attribute должно содержать не менее :min символов.',
-//            'max' => 'Поле :attribute должно содержать не более :max символов.',
-//        ];
-//    }
 }

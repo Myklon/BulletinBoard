@@ -38,7 +38,7 @@ class FormProductRequest extends FormRequest
             'title' => 'required|string|min:4|max:200',
             'short_description' => 'required|string|min:5|max:300',
             'description' => 'required|string|min:5|max:10000',
-            'price' => 'required|numeric|min:0',
+            'price' => 'required|numeric|min:0|max:999999',
             'cover' => 'image|max:2000',
             'files' => 'max:3',
             'files.*' => 'image|max:2000',
