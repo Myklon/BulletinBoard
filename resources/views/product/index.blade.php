@@ -9,7 +9,7 @@
         @endauth
         @if (\Session::has('success'))
             <div class="alert alert-success">
-                {{ \Session::get('success') }}
+                {{ \Session::get('success') }}з
             </div>
         @endif
             <div class="row row-cols-1 row-cols-sm-2 row-cols-md-4 g-3 d-flex align-items-stretch">

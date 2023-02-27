@@ -32,7 +32,7 @@
                 </div>
                 <div class="form-group form-check mb-3">
                     <label class="form-check-label">
-                        <input class="form-check-input" type="checkbox"> Запомнить меня
+                        <input class="form-check-input" name="remember" type="checkbox"> Запомнить меня
                     </label>
                 </div>
                 <button type="submit" class="btn btn-primary">Войти</button>
