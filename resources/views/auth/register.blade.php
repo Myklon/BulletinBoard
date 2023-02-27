@@ -1,4 +1,4 @@
-@extends('layouts.main')
+@extends('layouts.main', ['title' => 'Регистрация'])
 @section('content')
     <div class="row mt-4 justify-content-center">
         <h2 class="text-center">Регистрация</h2>
@@ -39,11 +39,6 @@
                     @error('password_confirmation')
                     <p class="text-danger">{{$message}}</p>
                     @enderror
-                </div>
-                <div class="form-group form-check mb-3">
-                    <label class="form-check-label">
-                        <input class="form-check-input" type="checkbox"> Запомнить меня
-                    </label>
                 </div>
                 <button type="submit" class="btn btn-primary">Зарегистрироваться</button>
             </form>

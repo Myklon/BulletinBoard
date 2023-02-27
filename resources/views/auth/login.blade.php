@@ -1,4 +1,4 @@
-@extends('layouts.main')
+@extends('layouts.main', ['title' => 'Вход'])
 @section('content')
 
     <div class="row mt-4 justify-content-center">
@@ -29,6 +29,11 @@
                     @error('password')
                     <p class="text-danger">{{$message}}</p>
                     @enderror
+                </div>
+                <div class="form-group form-check mb-3">
+                    <label class="form-check-label">
+                        <input class="form-check-input" type="checkbox"> Запомнить меня
+                    </label>
                 </div>
                 <button type="submit" class="btn btn-primary">Войти</button>
             </form>
