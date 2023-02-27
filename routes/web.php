@@ -27,22 +27,22 @@ Route::middleware(['auth'])->group(function () {
 
 Route::prefix('products')->group(function () {
     Route::get('/', [\App\Http\Controllers\ProductController::class, 'index'])->name('product.index');
-    Route::get('{product}', [\App\Http\Controllers\ProductController::class, 'show'])->name('product.show')->middleware('regex.id');
+    Route::get('{product}', [\App\Http\Controllers\ProductController::class, 'showProduct'])->name('product.show')->middleware('regex.id');
 
     Route::middleware(['auth', 'regex.id'])->group(function () {
-    Route::get('create', [\App\Http\Controllers\ProductController::class, 'createForm'])->name('product.create');
+    Route::get('create', [\App\Http\Controllers\ProductController::class, 'createProductForm'])->name('product.create');
     Route::post('create', [\App\Http\Controllers\ProductController::class, 'store'])->name('product.store');
-    Route::get('{product}/edit', [\App\Http\Controllers\ProductController::class, 'editForm'])->name('product.edit');
+    Route::get('{product}/edit', [\App\Http\Controllers\ProductController::class, 'editProductForm'])->name('product.edit');
     Route::post('{product}/update', [\App\Http\Controllers\ProductController::class, 'update'])->name('product.update');
-    Route::post('{product}/remove', [\App\Http\Controllers\ProductController::class, 'remove'])->name('product.remove');
+    Route::post('{product}/remove', [\App\Http\Controllers\ProductController::class, 'removeProduct'])->name('product.remove');
     });
 });
 
-Route::prefix('profile')->group(function () {
-    Route::get('{user}', [\App\Http\Controllers\ProfileController::class, 'show'])->name('profile.show')->middleware('regex.id');
+Route::prefix('profile')->middleware('regex.id')->group(function () {
+    Route::get('{user}', [\App\Http\Controllers\ProfileController::class, 'showProfile'])->name('profile.show')->middleware('regex.id');
 
-    Route::middleware(['auth', 'regex.id'])->group(function () {
-        Route::get('{user}/edit', [\App\Http\Controllers\ProfileController::class, 'editForm'])->name('profile.edit');
+    Route::middleware(['auth'])->group(function () {
+        Route::get('{user}/edit', [\App\Http\Controllers\ProfileController::class, 'editProfileForm'])->name('profile.edit');
         Route::post('{user}/change_phone', [\App\Http\Controllers\ProfileController::class, 'changePhone'])->name('profile.change_phone');
         Route::post('{user}/change_password', [\App\Http\Controllers\ProfileController::class, 'changePassword'])->name('profile.change_password');
     });

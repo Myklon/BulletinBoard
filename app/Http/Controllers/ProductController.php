@@ -21,7 +21,7 @@ class ProductController extends Controller
         return view('product.index', compact('products'));
     }
 
-    public function create()
+    public function createProductForm()
     {
         $categories = Category::limit(100)->get();
         return view('product.create', compact('categories'));
@@ -55,7 +55,7 @@ class ProductController extends Controller
         return redirect()->route('product.show', $product->id)->with('success', __('product.create.success.success'));
     }
 
-    public function edit(Product $product)
+    public function editProductForm(Product $product)
     {
         $categories = Category::limit(100)->get();
         return view('product.edit', compact('categories', 'product'));
@@ -100,7 +100,7 @@ class ProductController extends Controller
         return redirect()->route('product.show', $product->id)->with('success', __('product.edit.success.success'));
     }
 
-    public function remove(Product $product)
+    public function removeProduct(Product $product)
     {
         if($product->cover !== "covers/default.png")
         {
@@ -120,7 +120,7 @@ class ProductController extends Controller
         return redirect()->route('product.index')->with('success', __('product.delete.success.success'));
     }
 
-    public function show(Product $product, ProductRecomendationsService $productRecomendationsService)
+    public function showProduct(Product $product, ProductRecomendationsService $productRecomendationsService)
     {
         $recommendations = $productRecomendationsService->getRecommendations($product->id, $product->category_id, 4);
 

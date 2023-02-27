@@ -10,12 +10,12 @@ use Illuminate\Http\Request;
 
 class ProfileController extends Controller
 {
-    public function show(User $user)
+    public function showProfile(User $user)
     {
         return view('profile.show', compact('user'));
     }
 
-    public function edit(User $user)
+    public function editProfileForm(User $user)
     {
         return view('profile.form', compact('user'));
     }
