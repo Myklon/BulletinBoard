@@ -14,8 +14,10 @@
                         href="{{route('category.show', $product->category->id)}}">{{$product->category->title}}</a></p>
                 <img src="{{ asset("storage/$product->cover") }}" class="img-fluid my-3" width="100%"
                      style="max-height: 340px; object-fit: contain;">
+                <article class="main px-3 mt-3">
                 <p class="lead">{{$product->short_description}}</p>
-                <p>{{$product->description}}</p>
+                <p class="description">{{$product->description}}</p>
+                </article>
                 <div class="row">
                     @foreach($product->files as $file)
                         <div class="col-md-12">
@@ -28,6 +30,7 @@
             <div class="col-md-4">
                 <h2>Продавец: <a href="{{route('profile.show', $product->user->id)}}">{{$product->user->login}}</a></h2>
                 <h3>Связаться: {{$product->user->phone}}</h3>
+                @can('edit', $product)
                 <div class="d-inline">
                     <a class="btn btn-primary" href="{{route('product.edit', $product->id)}}" role="button">Изменить</a>
                     <form class="mt-2" action="{{route('product.remove', $product->id)}}" method="post">
@@ -35,6 +38,7 @@
                         <button class="btn btn-danger" type="submit">Удалить</button>
                     </form>
                 </div>
+                @endcan
             </div>
             <hr>
             <h3 class="mt-4">Рекомендации:</h3>

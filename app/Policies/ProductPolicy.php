@@ -17,7 +17,12 @@ class ProductPolicy
      * @param  \App\Models\Product  $product
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function isOwner(User $user, Product $product)
+    public function edit(User $user, Product $product)
+    {
+        return $user->id === $product->user_id;
+    }
+
+    public function delete(User $user, Product $product)
     {
         return $user->id === $product->user_id;
     }

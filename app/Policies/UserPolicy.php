@@ -9,7 +9,7 @@ class UserPolicy
 {
     use HandlesAuthorization;
 
-    public function isOwner(User $user, User $model)
+    public function edit(User $user, User $model)
     {
         return $user->id === $model->id;
     }

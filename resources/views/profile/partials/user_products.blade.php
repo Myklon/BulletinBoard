@@ -1,7 +1,7 @@
 <hr>
 <h3 class="mt-4 mb-3">Объявления пользователя:</h3>
 <div class="row row-cols-1 row-cols-sm-1 row-cols-md-2 g-3 d-flex align-items-stretch">
-    @foreach($user->products as $product)
+    @foreach($products as $product)
         <div class="col">
             <div class="card shadow-sm">
                 <img src="{{ asset("storage/$product->cover") }}" alt="" width="100%"
@@ -24,4 +24,7 @@
             </div>
         </div>
     @endforeach
+</div>
+<div class="mt-3">
+    {{ $products->links() }}
 </div>

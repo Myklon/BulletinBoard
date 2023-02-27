@@ -44,7 +44,7 @@ class SampleData extends Seeder
         //     'email' => 'test@example.com',
         // ]);
 
-        Product::factory(20)->create();
+        Product::factory(55)->create();
         #Создание объявлений-заглушек
         DB::table('products')->insert([
            'title' => 'Заглушка первая',
